@@ -1,3 +1,7 @@
+## Copyright 2020 Evgeny Zaytsev
+## Distributed under the Boost Software License, Version 1.0.
+## See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
+
 cmake_minimum_required(VERSION 3.10)
 project(Calculator)
 
@@ -6,3 +10,7 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconvers
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 ${CMAKE_CXX_FLAGS}")
 
 add_executable(Calculator Calculator.cpp Calculator.h main.cpp)
+
+enable_testing()
+add_executable(CalculatorTest Calculator.h Calculator.cpp Tests.cpp)
+add_test(CalculatorTest CalculatorTest)
