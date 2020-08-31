@@ -1,0 +1,19 @@
+test:
+  image: kernol/ubuntu_latest_gcc9_gcovr:latest
+
+  script:
+  - apt update
+  - mkdir -p build
+  - cd build
+  - cmake ../ -DCMAKE_CXX_COMPILER=g++-9 -DCMAKE_C_COMPILER=gcc-9 -DCMAKE_CXX_FLAGS='-fprofile-arcs -ftest-coverage -lgcov'
+  - make -j5
+  - ctest --output-on-failure -j9 --timeout 10
+  - cd ..
+  - mkdir -p coverage
+  - gcovr -r . --gcov-executable=gcov-9 --exclude='catch*' --exclude='main*' --exclude='build/.*' --exclude='Test*' --html --html-details -o coverage/coverage.html
+
+  artifacts:
+    paths:
+    - coverage/
+    when: always
+    expire_in: 2 months
